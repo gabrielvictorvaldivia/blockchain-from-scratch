@@ -7,7 +7,8 @@
     "compile": "npx tsc",
     "start": "node ./dist/blockchain.js",
     "dev": "npx nodemon --watch './src/ --exec 'npx ts-node ./src/blockchain.ts' -e ts",
-    "test": "jest"
+    "test": "node --experimental-vm-modules node_modules/.bin/jest",
+    "test:watch": "node --experimental-vm-modules node_modules/.bin/jest --watch"
   },
   "repository": {
     "type": "git",
@@ -23,8 +24,10 @@
   "homepage": "https://github.com/gabrielvictorvaldivia/blockchain-from-scratch#readme",
   "devDependencies": {
     "@types/jest": "^30.0.0",
+    "@types/node": "^25.6.0",
     "jest": "^30.3.0",
     "ts-jest": "^29.4.9",
+    "ts-node": "^10.9.2",
     "typescript": "^6.0.3"
   }
 }
