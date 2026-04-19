@@ -55,7 +55,7 @@ class Block {
     nonce: number,
   ): Block {
     const block = new Block(index, data, previousHash, nonce);
-    // Congelando o bloco para garantir, do lado javascript, que seja imutável
+    // Congelando o bloco para garantir que do lado javascript seja imutável
     return (Object.freeze(block) as unknown) as Block;
   }
 
