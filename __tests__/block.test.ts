@@ -25,6 +25,13 @@ describe("Blockclear", () => {
     expect(block1.hash).not.toBe(block2.hash);
   });
 
+  test("hash deve mudar quando data mudar", () => {
+    const block1 = Block.generate(1, "dados originais", "prev",0);
+    const block2 = Block.generate(1, "dados diferentes", "prev",0);
+
+    expect(block1.hash).not.toBe(block2.hash);
+  });
+
   test("deve calcular hash corretamente com objeto complexo", () => {
     const complexData = {
       transactions: [
@@ -47,4 +54,7 @@ describe("Blockclear", () => {
     expect(block.hasValidHash(4)).toBeTruthy();
     expect(block.hasValidHash(5)).toBeFalsy();
   });
+
+
+
 });
