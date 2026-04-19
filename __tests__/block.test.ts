@@ -46,14 +46,15 @@ describe("Blockclear", () => {
     expect(block.hash).toHaveLength(64);
   });
 
-  // test("hasValidHash deve retornar true quando hash tem dificuldade atendida", () => {
-  //   const block = Block.generate(1, "teste", "prev", 12345);
+  test("hasValidHash deve retornar true quando hash tem dificuldade atendida", () => {
+    // Teste corrigido, agora não falha por conta da imutabilidade do bloco
+    // Fugindo do constructor privado para criar um bloco com hash específico para teste
+    const blockData = {index:1, timestamp: Date.now, data:"teste", previousHash: "prev", nonce: 0, hash: "0000abc123...", };
+    const block = Object.setPrototypeOf(blockData, Block.prototype) as Block;
 
-  //   (block as any).hash = "0000abc123..."; // Simulando um hash que atende a dificuldade
-
-  //   expect(block.hasValidHash(4)).toBeTruthy();
-  //   expect(block.hasValidHash(5)).toBeFalsy();
-  // });
+    expect(block.hasValidHash(4)).toBeTruthy();
+    expect(block.hasValidHash(5)).toBeFalsy();
+  });
 
   test("bloco deve ser imutável (propriedades readonly)", ()=> {
     const block = Block.generate(1, "teste", "prev", 0);
