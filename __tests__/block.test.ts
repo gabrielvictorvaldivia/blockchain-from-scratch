@@ -26,5 +26,22 @@ describe("Blockclear", () => {
     expect(block1.hash).not.toBe(block2.hash);
   })
 
-  
+  test("deve calcular hash corretamente com objeto complexo", () => {
+    const complexData = {
+      transactions: [
+        {from: "A", to: "B", amount: 100},
+        {from: "B", to: "C", amount: 50}
+      ],
+      version: 1,
+    };
+
+    const block = Block.generate(2, complexData, "previous-hash-123", 72853);
+
+    expect(block.hash).toHaveLength(64);
+  })
+
+
+  test("hashValidHash deve retornar true quando hash tem dificuldade atendida", () => {
+    
+  })
 });
