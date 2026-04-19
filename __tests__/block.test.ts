@@ -12,4 +12,10 @@ describe("Blockclear", () => {
     expect(genesisBlock.hash).toHaveLength(64);
   });
 
+
+  test("deve lançar erro se index for negativo",()=> {
+    expect(() => Block.generate(-1, "dados inválidos", "")).toThrow(
+      "Index can't be negative"
+    );
+  });
 });
