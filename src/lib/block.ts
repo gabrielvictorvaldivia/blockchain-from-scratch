@@ -44,8 +44,13 @@ class Block {
       .digest("hex");
   }
 
-  static generate(index: number, data: any, previousHash: string): Block {
-    return new Block(index, data, previousHash);
+  static generate(
+    index: number,
+    data: any,
+    previousHash: string,
+    nonce: number,
+  ): Block {
+    return new Block(index, data, previousHash, nonce);
   }
 
   static generateGenesis(): Block {
