@@ -44,6 +44,10 @@ class Block {
       .digest("hex");
   }
 
+  hasValidHash(difficulty:number):boolean {
+    return this.hash.startsWith("0".repeat(difficulty))
+  }
+
   static generate(
     index: number,
     data: any,
