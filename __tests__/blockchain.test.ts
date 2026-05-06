@@ -22,6 +22,15 @@ describe('Blockchain tests', () => {
         const blockchain = new Blockchain();
         const genesisBlock = blockchain.getLastBlock();
         const block = Block.generate(1, {amount: 100}, genesisBlock.hash, 55357);
+        const result = blockchain.addBlock(block, 4)
+        expect(result).toEqual(true);
+    })
+
+    test('Deve ser valido com 2 blocos', () => {
+        const blockchain = new Blockchain();
+        const genesisBlock = blockchain.getLastBlock();
+        const block = Block.generate(1, {amount: 100}, genesisBlock.hash, 55357);
+        blockchain.addBlock(block, 4)
         expect(blockchain.isValid()).toEqual(true);
 
     })
