@@ -1,11 +1,11 @@
-import {describe, test, expect, beforeAll} from "vitest";
+import {describe, test, expect, beforeEach} from "vitest";
 import Blockchain from "../src/blockchain";
 import Block from "../src/lib/block";
 import block from "../src/lib/block";
 
 describe('Blockchain tests', () => {
     let blockchain: Blockchain;
-    beforeAll(() => {
+    beforeEach(() => {
         blockchain = new Blockchain();
     })
 
@@ -33,5 +33,14 @@ describe('Blockchain tests', () => {
         blockchain.addBlock(block, 4)
         expect(blockchain.isValid()).toEqual(true);
 
+    })
+
+
+    test('Não deve adicionar um bloco com hash diferente', () => {
+        const blockchain = new Blockchain();
+        const genesisBlock = blockchain.getLastBlock();
+        const block = Block.generate(2, {amount: 100}, genesisBlock.hash, 55357);
+        const result = blockchain.addBlock(block, 4)
+        expect(result).toEqual(false);
     })
 })
