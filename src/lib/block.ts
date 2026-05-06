@@ -4,14 +4,14 @@ class Block {
     readonly index: number;
     readonly timestamp: number;
     readonly data: any;
-    readonly previousHash: string | undefined;
+    readonly previousHash: string | null;
     readonly nonce: number;
     readonly hash: string;
 
     private constructor(
         index: number,
         data: any,
-        previousHash: string | undefined,
+        previousHash: string | null,
         nonce: number = 0,
         timestamp: number = Date.now(),
     ) {
@@ -24,10 +24,10 @@ class Block {
         this.data = data;
         this.previousHash = previousHash;
         this.nonce = nonce;
-        this.hash = this.#calculateHash();
+        this.hash = this.calculateHash();
     }
 
-    #calculateHash(): string {
+    private calculateHash(): string {
         const dataStr =
             typeof this.data === "object" && this.data !== null
                 ? JSON.stringify(this.data)
@@ -45,15 +45,25 @@ class Block {
     }
 
     isValid(previousHash: string, previousIndex: number, difficulty: number): boolean {
-        if (previousHash !== this.previousHash) return false;
-        if (!this.data) return false;
-        if (this.timestamp < 1) return false;
-        if (this.previousHash !== previousHash) return false;
-        return this.#hasValidHash(difficulty);
+        if (previousHash !== this.previousHash)
+            return false
 
+        if (this.index !== previousIndex + 1)
+            return false
+
+        if (!this.data)
+            return false
+
+        if (this.timestamp < 1)
+            return false
+
+        if (this.previousHash !== previousHash)
+            return false
+
+        return this.hasValidHash(difficulty);
     }
 
-    #hasValidHash(difficulty: number): boolean {
+    private hasValidHash(difficulty: number): boolean {
         return this.hash.startsWith("0".repeat(difficulty))
     }
 
@@ -69,7 +79,7 @@ class Block {
     }
 
     static generateGenesis(): Block {
-        const block = new Block(0, {name: "Genesis Block"}, undefined, 0);
+        const block = new Block(0, {name: "Genesis Block"}, null, 0);
         // Congelando o bloco para garantir, do lado javascript, que seja imutável
         return (Object.freeze(block) as unknown) as Block;
     }
