@@ -1,8 +1,8 @@
 import Block from "./lib/block";
 
 export default class Blockchain {
-    blocks: Block[];
-    nextIndex: number = 0;
+    readonly blocks: Block[];
+    private nextIndex: number = 0;
 
     constructor() {
         this.blocks = [Block.generateGenesis()]
