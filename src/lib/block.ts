@@ -44,11 +44,11 @@ class Block {
             .digest("hex");
     }
 
-    isValid(previousHash: string, previousIndex: number, difficulty: number): boolean {
+    isValid(previousHash: string | null, previousIndex: number | null, difficulty: number): boolean {
         if (previousHash !== this.previousHash)
             return false
 
-        if (this.index !== previousIndex + 1)
+        if (previousIndex !== null && this.index !== previousIndex + 1)
             return false
 
         if (!this.data)
