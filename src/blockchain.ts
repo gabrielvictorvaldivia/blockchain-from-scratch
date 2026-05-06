@@ -13,7 +13,7 @@ export default class Blockchain {
         return this.blocks[this.blocks.length - 1];
     }
 
-    addBlock(block: Block, difficulty: number) {
+    addBlock(block: Block, difficulty: number): boolean {
         const lastBlock = this.getLastBlock();
 
         if (!block.isValid(lastBlock.hash, lastBlock.index, difficulty)) return false;
@@ -29,9 +29,8 @@ export default class Blockchain {
             const currentBlock = this.blocks[i];
             const previousBlock = this.blocks[i - 1];
             const result: boolean = currentBlock.isValid(previousBlock.hash, previousBlock.index, 0)
-            if (!result) {
+            if (!result)
                 return false;
-            }
         }
         return true;
     }
