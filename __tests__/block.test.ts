@@ -3,20 +3,20 @@ import Block from "../src/lib/block";
 
 
 describe("Block tests", () => {
-
+    let genesisBlock: Block;
     const FIXED_TIMESTAMP = 1778036531388
     beforeAll(() => {
         vi.spyOn(Date, "now").mockReturnValue(FIXED_TIMESTAMP)
+        genesisBlock = Block.generateGenesis(); // cria o genesis após mock do Date.now
     })
 
     test("deve criar um bloco genesis corretamente", () => {
-        const genesisBlock = Block.generateGenesis();
-
         expect(genesisBlock).toBeInstanceOf(Block);
         expect(genesisBlock.index).toBe(0);
         expect(genesisBlock.previousHash).toBe(null);
         expect(genesisBlock.data).toEqual({name: "Genesis Block"});
         expect(genesisBlock.hash).toHaveLength(64);
+        expect(genesisBlock.isValid(null, null, 0))
     });
 
     test("deve lançar erro se index for negativo", () => {
@@ -54,7 +54,6 @@ describe("Block tests", () => {
     });
 
     test("hasValidHash deve retornar true quando requisitos forem atendidos", () => {
-        const genesisBlock = Block.generateGenesis();
 
         const block = Block.generate(1, {amount: 100}, genesisBlock.hash, 55357);
 
